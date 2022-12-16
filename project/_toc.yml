@@ -6,4 +6,9 @@ root: intro
 chapters:
 - file: docs/scraping_script.ipynb
 - file: docs/data_cleaning_script.ipynb
+- file: docs/reviews_cleaning_script.ipynb
+- file: docs/lemmetization_script.ipynb
+- file: docs/eda_script.ipynb
+- file: docs/topic_modelling.ipynb
+- file: docs/sentiment_analysis.ipynb
 
