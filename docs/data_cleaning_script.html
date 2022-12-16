@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Data Pre Processing And Cleaning &#8212; My sample book</title>
+    <title>Data Pre Processing And Cleaning &#8212; Topic Modelling And Sentiment Analysis For Oberoi Delhi</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,7 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Web Scraping Review Data From Trip Advisor For Oberoi Delhi" href="scraping_script.html" />
+    <link rel="next" title="Reviews Data Cleaning" href="reviews_cleaning_script.html" />
+    <link rel="prev" title="Scraping Review Data From TripAdvisor" href="scraping_script.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -91,7 +92,7 @@ const thebe_selector_output = ".output, .cell_output"
       
       
       
-      <h1 class="site-logo" id="site-title">My sample book</h1>
+      <h1 class="site-logo" id="site-title">Topic Modelling And Sentiment Analysis For Oberoi Delhi</h1>
       
     </a>
 </div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
@@ -110,12 +111,37 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="scraping_script.html">
-   Web Scraping Review Data From Trip Advisor For Oberoi Delhi
+   Scraping Review Data From TripAdvisor
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Data Pre Processing And Cleaning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="reviews_cleaning_script.html">
+   Reviews Data Cleaning
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="lemmetization_script.html">
+   Lemmatizing Review Data
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="eda_script.html">
+   EDA
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="topic_modelling.html">
+   Topic Modelling
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="sentiment_analysis.html">
+   Sentiment Classifier And Analysis
   </a>
  </li>
 </ul>
@@ -177,7 +203,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/executablebooks/jupyter-book/master?urlpath=tree/docs/docs/data_cleaning_script.ipynb"
+        <a href="https://mybinder.org/v2/gh/AalokAtre/Oberoi_Delhi/master?urlpath=tree/docs/docs/data_cleaning_script.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -220,7 +246,7 @@ title="Fullscreen mode"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://github.com/executablebooks/jupyter-book"
+        <a href="https://github.com/AalokAtre/Oberoi_Delhi"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -237,7 +263,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/executablebooks/jupyter-book/issues/new?title=Issue%20on%20page%20%2Fdocs/data_cleaning_script.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/AalokAtre/Oberoi_Delhi/issues/new?title=Issue%20on%20page%20%2Fdocs/data_cleaning_script.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -328,7 +354,7 @@ title="Print to PDF"
                 
   <section id="data-pre-processing-and-cleaning">
 <h1>Data Pre Processing And Cleaning<a class="headerlink" href="#data-pre-processing-and-cleaning" title="Permalink to this headline">#</a></h1>
-<p>Apart from customer reviews we have columns like ‘Date Of Stay’, ‘Customer Rating’, and ‘Owner Responded’. This data is scrapped from the tripadvisor website as is and need some pre procesing / cleaning to be in a usable format</p>
+<p>Before cleaning reviews data, we need to pre process and clean other columns so that they can be used for EDA and sentiment analysis. We will use the CSV file that we scraped from trip advisor. Custom functions have been defined to handle each column in the dataset. You can find the explanation for each one above it definition block</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
@@ -411,6 +437,7 @@ df.head()
 </table>
 </div></div></div>
 </div>
+<p>Customer rating is in the form of a css class in the HTML. For e.g bubble_50 means the user has given a 5 star rating to the property. TripAdvisor doesn’t have ratings in decimals (like 4.5 or 3.5). Using the class value we will set the review rating into 5 categories (‘Excellent’, ‘Very Good’, ‘Average’, ‘Poor’, ‘Terrible’) as defined by TripAdvisor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Custom function to set trip type value
@@ -438,14 +465,15 @@ def set_customer_rating(customer_rating) :
 </div>
 </div>
 </div>
+<p>Owner’s Response column is where we set whether the owner has responded to a particular review or not. Almost all the responses are boiler plater templated responses, as such the content of these responses have very little value to us. Hence we will just check whether the owner (i.e Oberoi Delhi) has or has not responded to a particular reivew</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Set owner&#39;s response from collected date (Yes or No)
 def set_owners_response(owners_response) :
   if (owners_response is np.NaN) :
-    return &#39;No&#39;
+    return False
   else :
-    return &#39;Yes&#39;
+    return True
 </pre></div>
 </div>
 </div>
@@ -457,14 +485,14 @@ def set_owners_response(owners_response) :
 </div>
 </div>
 </div>
-<p>The extracted date is in the form of string. We will convert this string into date format, so that it becomes easier to perform EDA using this column</p>
+<p>Finally we will set the date object from the string that is scraped. This is especially useful information for performing EDA on the reviews</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Extract date from string
 import datetime
 def set_review_date(date_string) :
   if (date_string is np.NaN) :
-    return
+    return np.NaN
   else :
     extracted_date = date_string.partition(&#39;: &#39;)[2]
     return datetime.datetime.strptime(extracted_date, &#39;%B %Y&#39;).strftime(&#39;%m/%y&#39;)
@@ -479,7 +507,7 @@ def set_review_date(date_string) :
 </div>
 </div>
 </div>
-<p>Write the cleaned data to a csv file. The output file will have reviews that are yet to be cleaned which will do further</p>
+<p>Finally, we set the cleaned data to a CSV file. Note we have not yet performed any cleaning operation on the reviews themselves. This would the next step of our analysis</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df.to_csv(&#39;../data/cleaned_data.csv&#39;, index = False)
@@ -487,7 +515,7 @@ def set_review_date(date_string) :
 </div>
 </div>
 </div>
-<p>Check if there are any rows that have missing reviews</p>
+<p>Check for missing value….!</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = pd.read_csv(&#39;../data/cleaned_data.csv&#39;)
@@ -505,6 +533,7 @@ dtype: int64
 </div>
 </div>
 </div>
+<p>We find that three reviews don’t have date of stay attached to them. While we could remove these, it will result in loss of some information. As topic modelling and sentiment analysis are our primary objectives for this excercise we will let these reviews stay as they are.</p>
 </section>
 
     <script type="text/x-thebe-config">
@@ -538,8 +567,15 @@ dtype: int64
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Web Scraping Review Data From Trip Advisor For Oberoi Delhi</p>
+            <p class="prev-next-title">Scraping Review Data From TripAdvisor</p>
         </div>
+    </a>
+    <a class='right-next' id="next-link" href="reviews_cleaning_script.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Reviews Data Cleaning</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
     </a>
 </div>
             </footer>
@@ -548,7 +584,7 @@ dtype: int64
     <div class="footer-content row">
         <footer class="col footer"><p>
   
-    By The Jupyter Book Community<br/>
+    By Aalok Atre<br/>
   
       &copy; Copyright 2022.<br/>
 </p>

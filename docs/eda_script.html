@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Scraping Review Data From TripAdvisor &#8212; Topic Modelling And Sentiment Analysis For Oberoi Delhi</title>
+    <title>EDA &#8212; Topic Modelling And Sentiment Analysis For Oberoi Delhi</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Data Pre Processing And Cleaning" href="data_cleaning_script.html" />
-    <link rel="prev" title="Tripadvisor Reviews - Oberoi Delhi" href="../intro.html" />
+    <link rel="next" title="Topic Modelling" href="topic_modelling.html" />
+    <link rel="prev" title="Lemmatizing Review Data" href="lemmetization_script.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -109,8 +109,8 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="scraping_script.html">
    Scraping Review Data From TripAdvisor
   </a>
  </li>
@@ -129,8 +129,8 @@ const thebe_selector_output = ".output, .cell_output"
    Lemmatizing Review Data
   </a>
  </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="eda_script.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    EDA
   </a>
  </li>
@@ -203,7 +203,7 @@ title="Toggle navigation"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="https://mybinder.org/v2/gh/AalokAtre/Oberoi_Delhi/master?urlpath=tree/docs/docs/scraping_script.ipynb"
+        <a href="https://mybinder.org/v2/gh/AalokAtre/Oberoi_Delhi/master?urlpath=tree/docs/docs/eda_script.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -263,7 +263,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/AalokAtre/Oberoi_Delhi/issues/new?title=Issue%20on%20page%20%2Fdocs/scraping_script.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/AalokAtre/Oberoi_Delhi/issues/new?title=Issue%20on%20page%20%2Fdocs/eda_script.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -291,7 +291,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/docs/scraping_script.ipynb"
+        <a href="../_sources/docs/eda_script.ipynb"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -340,7 +340,7 @@ title="Print to PDF"
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Scraping Review Data From TripAdvisor</h1>
+                <h1>EDA</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
@@ -352,99 +352,114 @@ title="Print to PDF"
                 
               <div>
                 
-  <section class="tex2jax_ignore mathjax_ignore" id="scraping-review-data-from-tripadvisor">
-<h1>Scraping Review Data From TripAdvisor<a class="headerlink" href="#scraping-review-data-from-tripadvisor" title="Permalink to this headline">#</a></h1>
-<p>We will use the request and bs4 libraries to scrape reviews data from tripadvisor. TripAdvisor doesn’t block repeated requests to their URL’s unlike site like Yelp. As such there is no need to send authorization headers. We can make repeated calls to reviews page to extract reviews data without any IP blocking</p>
+  <section id="eda">
+<h1>EDA<a class="headerlink" href="#eda" title="Permalink to this headline">#</a></h1>
+<p>We will perform EDA on the scraped dataset. We will use the dataset that has all the data cleaned to perform this analysis. Cleaned reviews are useful to see EDA on token content</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import requests
-from bs4 import BeautifulSoup
-import pandas as pd
-from tqdm import tqdm
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
+import matplotlib.pyplot as plt
+from wordcloud import WordCloud
+import plotly.io as pio
+svg_renderer = pio.renderers[&quot;svg&quot;]
+svg_renderer.width = 1000
+svg_renderer.height = 500
+pio.renderers.default = &quot;svg&quot;
+import plotly.express as px
+import plotly.figure_factory as ff
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>headers = {
-        &#39;Access-Control-Allow-Origin&#39;: &#39;*&#39;,
-        &#39;Access-Control-Allow-Methods&#39;: &#39;GET&#39;,
-        &#39;Access-Control-Allow-Headers&#39;: &#39;Content-Type&#39;,
-        &#39;accept&#39;: &#39;*/*&#39;,
-        &#39;accept-encoding&#39;: &#39;gzip, deflate&#39;,
-        &#39;accept-language&#39;: &#39;en,mr;q=0.9&#39;,
-        &#39;User-Agent&#39;: &#39;Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/95.0.4638.69 Safari/537.36&#39;}
-
-url = &quot;https://www.tripadvisor.ca/Hotel_Review-g304551-d304216-Reviews-The_Oberoi_New_Delhi-New_Delhi_National_Capital_Territory_of_Delhi.html&quot;
-req = requests.get(url,headers=headers,timeout=5,verify=True)
-print (req.status_code)
-soup = BeautifulSoup(req.content, &#39;html.parser&#39;)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&#39;../data/cleaned_reviews_1.csv&#39;)
+df.info()
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>200
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
+RangeIndex: 2896 entries, 0 to 2895
+Data columns (total 4 columns):
+ #   Column           Non-Null Count  Dtype 
+---  ------           --------------  ----- 
+ 0   Customer Review  2896 non-null   object
+ 1   Date Of Stay     2893 non-null   object
+ 2   Customer Rating  2896 non-null   object
+ 3   Owner Responded  2896 non-null   bool  
+dtypes: bool(1), object(3)
+memory usage: 70.8+ KB
 </pre></div>
 </div>
 </div>
 </div>
-<p>Using TQDM library to check the current loop number during execution. This is especially helpful in case of timouts occuring during script execution. Based on loop number we can run the script from the page where timeout occured to get the remaining reviews. Classes for the review content are found by inspecting the elements. In future these classes may change</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>master_review_list = []
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>words = &#39;&#39;
+for review in df[&#39;Customer Review&#39;]:
+    tokens = str(review).split()
+    
+    words += &#39; &#39;.join(tokens) + &#39; &#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wordcloud = WordCloud(width = 800, height = 800, 
+                background_color =&#39;white&#39;,
+                collocations=True,
+                min_font_size = 10).generate(words) 
 
-for x in tqdm(range(0, 2900, 10)):
-  url = &quot;https://www.tripadvisor.ca/Hotel_Review-g304551-d304216-Reviews-or&quot; + str(x) + &quot;-The_Oberoi_New_Delhi-New_Delhi_National_Capital_Territory_of_Delhi.html#REVIEWS&quot;
-  req = requests.get(url,headers=headers,timeout=5,verify=True)
-  soup = BeautifulSoup(req.content, &#39;html.parser&#39;)
-  for y in soup.body.find_all(class_=&quot;YibKl&quot;):
-    review_content = []
-    # Review content
-    if y.find(&quot;q&quot;, {&quot;class&quot;: &quot;QewHA&quot;}) :
-      review_content.append(y.select_one(&#39;q[class*=&quot;QewHA&quot;]&#39;).text)
-    else :
-      review_content.append(None)
-    # Date of stay
-    if y.find(&quot;span&quot;, {&quot;class&quot;: &quot;teHYY&quot;}) :
-      review_content.append(y.select_one(&#39;span[class*=&quot;teHYY&quot;]&#39;).text)
-    else :
-      review_content.append(None)
-    # Rating
-    if y.find(&quot;div&quot;, {&quot;class&quot;: &quot;Hlmiy F1&quot;}) :
-      review_content.append(y.find(&quot;div&quot;, {&quot;class&quot;: &quot;Hlmiy F1&quot;}).span[&#39;class&#39;][1])
-    else :
-      review_content.append(None)
-    # Owner&#39;s response
-    if y.find(&quot;span&quot;, {&quot;class&quot;: &quot;MInAm&quot;}) :
-      review_content.append(y.select_one(&#39;span[class*=&quot;MInAm&quot;]&#39;).text)
-    else :
-      review_content.append(None)
-    master_review_list.append(review_content)
+plt.figure(figsize = (8, 8), facecolor = None) 
+plt.imshow(wordcloud) 
+plt.axis(&quot;off&quot;) 
+plt.tight_layout(pad = 0) 
+  
+plt.show() 
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stderr highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>100%|██████████| 290/290 [08:39&lt;00:00,  1.79s/it]
-</pre></div>
+<img alt="../_images/eda_script_5_0.png" src="../_images/eda_script_5_0.png" />
 </div>
 </div>
-</div>
-<p>Obtained data is in list format. We will convert this to a dataframe so it becomes easier to write the data to CSV. We will use the pandas library for this.</p>
+<p>Next thing we can do is to create wordcloud for specific rating class. Here let’s take review below 3 star i.e 2 and 1 which can be inferred as negative sentiment and plot the wordcloud</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>reviews_df = pd.DataFrame(master_review_list, columns = [&#39;Customer Review&#39;, &#39;Date Of Stay&#39;, &#39;Customer Rating&#39;, &#39;Owner Responded&#39;])
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot distribution of review count based on customer ratings
+fig = px.histogram(df, 
+                    x=&#39;Customer Rating&#39;, 
+                    text_auto=True, 
+                    log_y=False,
+                    title=&#39;Distribution of reviews&#39;)
+fig.show()
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/eda_script_7_0.svg" src="../_images/eda_script_7_0.svg" /></div>
 </div>
-<p>Writing the dataframe to a csv file in project structure. We will perform cleaning and preprocessing using the CSV file. This is done so that we do not overload the scraping script with logic and instead only focus on getting the data in raw format</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>reviews_df.to_csv(&#39;../data/oberoi_delhi_reviews.csv&#39;, index = False)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Creating a year column so that we can plot the review count per year instead of individual days
+df[&#39;Date Of Stay&#39;] = pd.to_datetime(df[&#39;Date Of Stay&#39;], format=&#39;%m/%y&#39;)
+df[&#39;YEAR&#39;] = df[&#39;Date Of Stay&#39;].dt.year
+df
+fig = px.histogram(df, 
+                    x=&#39;YEAR&#39;, 
+                    color=&#39;Customer Rating&#39;, 
+                    text_auto=True, 
+                    log_y=False,
+                    barmode=&#39;group&#39;,
+                    title=&#39;Review sentiments by year&#39;)
+fig.show()
 </pre></div>
 </div>
 </div>
+<div class="cell_output docutils container">
+<img alt="../_images/eda_script_8_0.svg" src="../_images/eda_script_8_0.svg" /></div>
 </div>
 </section>
 
@@ -475,17 +490,17 @@ for x in tqdm(range(0, 2900, 10)):
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="lemmetization_script.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Tripadvisor Reviews - Oberoi Delhi</p>
+            <p class="prev-next-title">Lemmatizing Review Data</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="data_cleaning_script.html" title="next page">
+    <a class='right-next' id="next-link" href="topic_modelling.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Data Pre Processing And Cleaning</p>
+        <p class="prev-next-title">Topic Modelling</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>
