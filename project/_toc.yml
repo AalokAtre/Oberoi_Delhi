@@ -4,6 +4,7 @@
 format: jb-book
 root: intro
 chapters:
+- file: docs/about.md
 - file: docs/scraping_script.ipynb
 - file: docs/data_cleaning_script.ipynb
 - file: docs/reviews_cleaning_script.ipynb
