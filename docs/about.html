@@ -6,7 +6,7 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
 
-    <title>Exploratory Data Analysis (EDA) &#8212; Topic Modelling And Sentiment Analysis For Oberoi Delhi</title>
+    <title>About &#8212; Topic Modelling And Sentiment Analysis For Oberoi Delhi</title>
     
   <!-- Loaded before other Sphinx assets -->
   <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
@@ -52,8 +52,8 @@ const thebe_selector_output = ".output, .cell_output"
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Topic Modelling" href="topic_modelling.html" />
-    <link rel="prev" title="Lemmatizing Review Data" href="lemmetization_script.html" />
+    <link rel="next" title="Scraping Review Data From TripAdvisor" href="scraping_script.html" />
+    <link rel="prev" title="Topic Modelling &amp; Sentiment Analysis Of Tripadvisor Reviews for Oberoi Delhi" href="../intro.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -109,8 +109,8 @@ const thebe_selector_output = ".output, .cell_output"
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="about.html">
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
    About
   </a>
  </li>
@@ -134,8 +134,8 @@ const thebe_selector_output = ".output, .cell_output"
    Lemmatizing Review Data
   </a>
  </li>
- <li class="toctree-l1 current active">
-  <a class="current reference internal" href="#">
+ <li class="toctree-l1">
+  <a class="reference internal" href="eda_script.html">
    Exploratory Data Analysis (EDA)
   </a>
  </li>
@@ -200,35 +200,6 @@ title="Toggle navigation"
         
     </div>
     <div class="header-article__right">
-<div class="menu-dropdown menu-dropdown-launch-buttons">
-  <button class="headerbtn menu-dropdown__trigger"
-      aria-label="Launch interactive content">
-      <i class="fas fa-rocket"></i>
-  </button>
-  <div class="menu-dropdown__content">
-    <ul>
-      <li>
-        <a href="https://mybinder.org/v2/gh/AalokAtre/Oberoi_Delhi/master?urlpath=tree/docs/docs/eda_script.ipynb"
-   class="headerbtn"
-   data-toggle="tooltip"
-data-placement="left"
-title="Launch on Binder"
->
-  
-
-<span class="headerbtn__icon-container">
-  
-    <img src="../_static/images/logo_binder.svg">
-  </span>
-<span class="headerbtn__text-container">Binder</span>
-</a>
-
-      </li>
-      
-    </ul>
-  </div>
-</div>
-
 <button onclick="toggleFullScreen()"
   class="headerbtn"
   data-toggle="tooltip"
@@ -268,7 +239,7 @@ title="Source repository"
       </li>
       
       <li>
-        <a href="https://github.com/AalokAtre/Oberoi_Delhi/issues/new?title=Issue%20on%20page%20%2Fdocs/eda_script.html&body=Your%20issue%20content%20here."
+        <a href="https://github.com/AalokAtre/Oberoi_Delhi/issues/new?title=Issue%20on%20page%20%2Fdocs/about.html&body=Your%20issue%20content%20here."
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -296,7 +267,7 @@ title="Open an issue"
   <div class="menu-dropdown__content">
     <ul>
       <li>
-        <a href="../_sources/docs/eda_script.ipynb"
+        <a href="../_sources/docs/about.md"
    class="headerbtn"
    data-toggle="tooltip"
 data-placement="left"
@@ -307,7 +278,7 @@ title="Download source file"
 <span class="headerbtn__icon-container">
   <i class="fas fa-file"></i>
   </span>
-<span class="headerbtn__text-container">.ipynb</span>
+<span class="headerbtn__text-container">.md</span>
 </a>
 
       </li>
@@ -333,23 +304,60 @@ title="Print to PDF"
     </ul>
   </div>
 </div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
 
     </div>
 </div>
 
 <!-- Table of contents -->
 <div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#by-aalok-atre-2213001">
+   By Aalok Atre (2213001)
+  </a>
+ </li>
+</ul>
+
+    </nav>
 </div>
     </div>
     <div class="article row">
         <div class="col pl-md-3 pl-lg-5 content-container">
             <!-- Table of contents that is only displayed when printing the page -->
             <div id="jb-print-docs-body" class="onlyprint">
-                <h1>Exploratory Data Analysis (EDA)</h1>
+                <h1>About</h1>
                 <!-- Table of contents -->
                 <div id="print-main-content">
                     <div id="jb-print-toc">
                         
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#by-aalok-atre-2213001">
+   By Aalok Atre (2213001)
+  </a>
+ </li>
+</ul>
+
+                        </nav>
                     </div>
                 </div>
             </div>
@@ -357,181 +365,14 @@ title="Print to PDF"
                 
               <div>
                 
-  <section id="exploratory-data-analysis-eda">
-<h1>Exploratory Data Analysis (EDA)<a class="headerlink" href="#exploratory-data-analysis-eda" title="Permalink to this headline">#</a></h1>
-<p>We will perform EDA on the scraped dataset. We will use the dataset that has all the data cleaned to perform this analysis. Cleaned reviews are useful to see EDA on token content. We leavrage the plotly and wordcloud packages for this representation.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import pandas as pd
-import matplotlib.pyplot as plt
-from wordcloud import WordCloud
-import plotly.io as pio
-svg_renderer = pio.renderers[&quot;svg&quot;]
-svg_renderer.width = 1000
-svg_renderer.height = 500
-pio.renderers.default = &quot;svg&quot;
-import plotly.express as px
-import plotly.figure_factory as ff
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>df = pd.read_csv(&#39;../data/cleaned_reviews_1.csv&#39;)
-df.info()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&lt;class &#39;pandas.core.frame.DataFrame&#39;&gt;
-RangeIndex: 2896 entries, 0 to 2895
-Data columns (total 4 columns):
- #   Column           Non-Null Count  Dtype 
----  ------           --------------  ----- 
- 0   Customer Review  2896 non-null   object
- 1   Date Of Stay     2893 non-null   object
- 2   Customer Rating  2896 non-null   object
- 3   Owner Responded  2896 non-null   bool  
-dtypes: bool(1), object(3)
-memory usage: 70.8+ KB
-</pre></div>
-</div>
-</div>
-</div>
-<p>We would first plot the wordcloud for the entire review set. We use the cleaned review set which has all the stopwords removed. This gives us a . wordcloud that is actually meaningful</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>words = &#39;&#39;
-for review in df[&#39;Customer Review&#39;]:
-    tokens = str(review).split()
-    
-    words += &#39; &#39;.join(tokens) + &#39; &#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wordcloud = WordCloud(width = 800, height = 800, 
-                background_color =&#39;white&#39;,
-                collocations=True,
-                min_font_size = 10).generate(words) 
-
-plt.figure(figsize = (8, 8), facecolor = None) 
-plt.imshow(wordcloud) 
-plt.axis(&quot;off&quot;) 
-plt.tight_layout(pad = 0) 
-  
-plt.show() 
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/eda_script_6_0.png" src="../_images/eda_script_6_0.png" />
-</div>
-</div>
-<p>We can also create a wordcloud that only takes in negative reviews. i.e Poor and Terrible rating reviews as below.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>negative_rating = [&#39;Poor&#39;, &#39;Terrible&#39;]
-rslt_df = df.loc[df[&quot;Customer Rating&quot;].isin(negative_rating) ]
-
-words = &#39;&#39;
-for review in rslt_df[&#39;Customer Review&#39;]:
-    tokens = str(review).split()
-    
-    words += &#39; &#39;.join(tokens) + &#39; &#39;
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>wordcloud = WordCloud(width = 800, height = 800, 
-                background_color =&#39;white&#39;,
-                collocations=True,
-                min_font_size = 10).generate(words) 
-
-plt.figure(figsize = (8, 8), facecolor = None) 
-plt.imshow(wordcloud) 
-plt.axis(&quot;off&quot;) 
-plt.tight_layout(pad = 0) 
-  
-plt.show()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/eda_script_9_0.png" src="../_images/eda_script_9_0.png" />
-</div>
-</div>
-<p>Plotting the distribution of reviews based on rating. We observe that the dataset is dominated heavily be “Excellent” reviews. All other classes are minority classes</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># Plot distribution of review count based on customer ratings
-fig = px.histogram(df, 
-                    x=&#39;Customer Rating&#39;, 
-                    text_auto=True, 
-                    log_y=False,
-                    title=&#39;Distribution of reviews&#39;)
-fig.show()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/eda_script_11_0.svg" src="../_images/eda_script_11_0.svg" /></div>
-</div>
-<p>We now create a new column called year using the “Date Of Stay” that was scrapped from the reviews. This gives us a good understanding of how the review distribution has changed over a 5 year period</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>
-df[&#39;Date Of Stay&#39;] = pd.to_datetime(df[&#39;Date Of Stay&#39;], format=&#39;%m/%y&#39;)
-df[&#39;Year&#39;] = df[&#39;Date Of Stay&#39;].dt.year
-fig = px.histogram(df, 
-                    x=&#39;Year&#39;, 
-                    color=&#39;Customer Rating&#39;, 
-                    text_auto=True, 
-                    log_y=False,
-                    barmode=&#39;group&#39;,
-                    nbins=5,
-                    title=&#39;Review sentiments by year&#39;)
-fig.show()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/eda_script_13_0.svg" src="../_images/eda_script_13_0.svg" /></div>
-</div>
-<p>Calculating average review length for each review rating.</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import plotly.io as pio
-average_review_length = []
-rating = [&quot;Excellent&quot;, &quot;Very Good&quot;, &quot;Average&quot;, &quot;Poor&quot;, &quot;Terrible&quot;]
-for x in rating :
-  rslt_df = df.loc[df[&quot;Customer Rating&quot;] == x ]
-  rslt_df[&quot;Number of Words&quot;] = rslt_df[&quot;Customer Review&quot;].apply(lambda n: len(n.split()))
-  average_review_length.append(sum(rslt_df[&#39;Number of Words&#39;]) / len(rslt_df.index))
-
-
-df2 = pd.DataFrame(list(zip(rating, average_review_length)),
-               columns =[&#39;Rating&#39;, &#39;Average Review Length&#39;])
-</pre></div>
-</div>
-</div>
-</div>
-<p>Plotting average review length to rating category</p>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>fig = px.line(df2, x=&quot;Rating&quot;, y=&quot;Average Review Length&quot;, title=&#39;Rating vs Average Length Of Review&#39;)
-fig.show()
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<img alt="../_images/eda_script_17_0.svg" src="../_images/eda_script_17_0.svg" /></div>
-</div>
+  <section id="about">
+<h1>About<a class="headerlink" href="#about" title="Permalink to this headline">#</a></h1>
+<section id="by-aalok-atre-2213001">
+<h2>By Aalok Atre (2213001)<a class="headerlink" href="#by-aalok-atre-2213001" title="Permalink to this headline">#</a></h2>
+<p>Find the jupyter book hosted here<a href="https://aalokatre.github.io/Oberoi_Delhi/intro.html">Link To Jupyter Book</a><br>
+Bonus : You can check out the interactive LDA topic modelling output here <a href="https://aalokatre.github.io/Oberoi_Delhi/docs/topic_modelling.html">Link To Topic Modelling</a><br>
+For complete code <a href="https://github.com/AalokAtre/Oberoi_Delhi">Link To Code </a></p>
+</section>
 </section>
 
     <script type="text/x-thebe-config">
@@ -561,17 +402,17 @@ fig.show()
                 
     <!-- Previous / next buttons -->
 <div class='prev-next-area'>
-    <a class='left-prev' id="prev-link" href="lemmetization_script.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="../intro.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Lemmatizing Review Data</p>
+            <p class="prev-next-title">Topic Modelling &amp; Sentiment Analysis Of Tripadvisor Reviews for Oberoi Delhi</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="topic_modelling.html" title="next page">
+    <a class='right-next' id="next-link" href="scraping_script.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Topic Modelling</p>
+        <p class="prev-next-title">Scraping Review Data From TripAdvisor</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

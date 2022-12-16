@@ -103,11 +103,16 @@ const thebe_selector_output = ".output, .cell_output"
         <ul class="nav bd-sidenav bd-sidenav__home-link">
             <li class="toctree-l1">
                 <a class="reference internal" href="../intro.html">
-                    Tripadvisor Reviews - Oberoi Delhi
+                    Topic Modelling & Sentiment Analysis Of Tripadvisor Reviews for Oberoi Delhi
                 </a>
             </li>
         </ul>
         <ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="about.html">
+   About
+  </a>
+ </li>
  <li class="toctree-l1">
   <a class="reference internal" href="scraping_script.html">
    Scraping Review Data From TripAdvisor
@@ -130,7 +135,7 @@ const thebe_selector_output = ".output, .cell_output"
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="eda_script.html">
-   EDA
+   Exploratory Data Analysis (EDA)
   </a>
  </li>
  <li class="toctree-l1">
@@ -381,6 +386,7 @@ df.shape
 </div>
 </div>
 </div>
+<p>Splitting our dataset into train and test sets in 80-20 split.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train = df.sample(frac = 0.8, random_state = 25)
@@ -395,6 +401,7 @@ print(train.shape, test.shape)
 </div>
 </div>
 </div>
+<p>Importing the required spacy package. English pipeline optimized for CPU. Components: tok2vec, tagger, parser, senter, ner, attribute_ruler, lemmatizer.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import spacy
@@ -409,6 +416,7 @@ nlp.pipe_names
 </div>
 </div>
 </div>
+<p>First step is to create tuples which are pairs of text along with sentiments. Creating tuples for both train dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train[&#39;tuples&#39;] = train.apply(lambda row: (row[&#39;Customer Review&#39;],row[&#39;Customer Rating&#39;]), axis=1)
@@ -417,6 +425,7 @@ train = train[&#39;tuples&#39;].tolist()
 </div>
 </div>
 </div>
+<p>Creating tuples for test dataset.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>test[&#39;tuples&#39;] = test.apply(lambda row: (row[&#39;Customer Review&#39;],row[&#39;Customer Rating&#39;]), axis=1)
@@ -425,6 +434,7 @@ test = test[&#39;tuples&#39;].tolist()
 </div>
 </div>
 </div>
+<p>Checking one of the tuples that were created above. As you can see it is a combination of review and its sentiment.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>train[0]
@@ -438,6 +448,7 @@ test = test[&#39;tuples&#39;].tolist()
 </div>
 </div>
 </div>
+<p>The second step is to create a spaCy document for each tuple in the train and test dataset with the help of a transformer model (en_core_web_sm)using a spacy pipeline called nlp. Each tuple is nothing but text and its sentiments. Note here that we map 4 and 5 star ratings (Excellent and Very Good as positive sentiments), 1 and 2 start rating (Poor and Terrible) as negative and everything else i.e 3 star as Neutral</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def document(data):
@@ -520,6 +531,7 @@ print(&#39;Duration: {}&#39;.format(end_time - start_time))
 </div>
 </div>
 </div>
+<p>We use the base spacy config file to define our own configuration for model parameters. Default configurtions are more than enough for us. All we need to do is define the paths for train and dev files</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#Converting base configuration into full config file
@@ -537,6 +549,7 @@ python -m spacy train config.cfg --paths.train ./train.spacy --paths.dev ./dev.s
 </div>
 </div>
 </div>
+<p>Finally we run the script to train our spacy model to perform sentiment analysis. This model will then be saved to output updated folder from where we can leverage the trained model to predict review sentiments.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_time = datetime.now()
@@ -638,6 +651,28 @@ print(demo.cats)
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;positive&#39;: 0.9619991779327393, &#39;negative&#39;: 0.013230466283857822, &#39;neutral&#39;: 0.024770323187112808}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>text2 = &quot;Stay was as expected. The service was on par with our expecations&quot;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>#Test the data from the best model
+nlp = spacy.load(&quot;output_updated/model-best&quot;)
+demo = nlp(text2)
+print(demo.cats)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;positive&#39;: 0.7474048137664795, &#39;negative&#39;: 0.1129467636346817, &#39;neutral&#39;: 0.13964837789535522}
 </pre></div>
 </div>
 </div>
